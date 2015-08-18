@@ -24,7 +24,7 @@
             return repo.language;
         }
         else {
-            return 'HTML/CSS';
+            return 'Default';
         }
     }
 
@@ -42,7 +42,7 @@
     // Create an entry for the repo in the grid of org repos
     function showRepo(repo) {
         var $item = $('<div class="unit-1-3 repo" />');
-        var $link = $('<a class="box" href="' + getRepoUrl(repo) + '" />');
+        var $link = $('<a class="box ' + getRepoLang(repo).toLowerCase() + '" href="' + getRepoUrl(repo) + '" />');
 
         $link.append('<h2 class="repo__name">' + repo.name + '</h2>');
         $link.append('<p class="repo__info">' + repo.watchers + ' stargazers &middot; ' + getRepoLang(repo) + '</p>');
@@ -53,14 +53,14 @@
         $item.appendTo('#repos');
     }
 
-    $.getJSON('https://api.github.com/users/' + userName + '/gists?type=public&callback=?', function (result) {
+    $.getJSON('https://api.github.com/users/' + userName + '/gists?callback=?', function (result) {
         var gists = result.data;
         $(function () {
             $('#num-gists').text(gists.length);
         });
     });
 
-    $.getJSON('https://api.github.com/users/' + userName + '/repos?type=public&callback=?', function (result) {
+    $.getJSON('https://api.github.com/users/' + userName + '/repos?callback=?', function (result) {
         var repos = result.data;
         $(function () {
             $('#num-repos').text(repos.length);
