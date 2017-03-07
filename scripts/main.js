@@ -5,10 +5,10 @@ $(function () {
   var $root = $('html');
   var uuid = 0;
   var grid = null;
-  var per_page = 10;
+  var per_page = 100;
   var num_pages = 1;
   var github_username = 'heiswayi';
-  var access_token = '28f195998dcbc05cb979a122f15af35510ed4f05'; // access public repo only
+  //var access_token = '28f195998dcbc05cb979a122f15af35510ed4f05'; // access public repo only
 
   // $.ajax({
   //   type: 'GET',
@@ -24,7 +24,8 @@ $(function () {
   $.ajax({
     type: 'GET',
     //url: 'https://api.github.com/users/heiswayi/repos?callback=?&per_page=100',
-    url: 'https://api.github.com/users/' + github_username + '?&access_token=' + access_token,
+    //url: 'https://api.github.com/users/' + github_username + '?&access_token=' + access_token,
+    url: 'https://api.github.com/users/' + github_username,
     dataType: 'json',
     success: function (data) {
       $('.total-repos').text(data.public_repos);
@@ -36,7 +37,8 @@ $(function () {
         num_pages = Math.ceil(data.public_repos / per_page);
         generate_page_button(num_pages);
       }
-      get_repos('https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&access_token=' + access_token);
+      //get_repos('https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&access_token=' + access_token);
+      get_repos('https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page);
     }
   });
   // }
@@ -73,7 +75,8 @@ $(function () {
   function goto_page(page) {
     var api = '';
     if (page == 1) {
-      api = 'https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&access_token=' + access_token;
+      //api = 'https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&access_token=' + access_token;
+      api = 'https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page;
       $('.prev').addClass('is-disabled');
       $('.page').removeClass('is-disabled').removeClass('current-page');
       $('.page').each(function() {
@@ -84,7 +87,8 @@ $(function () {
     }
 
     if (page == num_pages || page > num_pages) {
-      api = 'https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&page=' + num_pages + '&access_token=' + access_token;
+      //api = 'https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&page=' + num_pages + '&access_token=' + access_token;
+      api = 'https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&page=' + num_pages;
       $('.next').addClass('is-disabled');
       $('.page').removeClass('is-disabled').removeClass('current-page');
       $('.page').each(function() {
@@ -95,7 +99,8 @@ $(function () {
     }
 
     if (page > 1 && page < num_pages) {
-      api = 'https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&page=' + page + '&access_token=' + access_token;
+      //api = 'https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&page=' + page + '&access_token=' + access_token;
+      api = 'https://api.github.com/users/' + github_username + '/repos?&per_page=' + per_page + '&page=' + page;
       $('.prev').removeClass('is-disabled').attr('data-page', (page - 1));
       $('.next').removeClass('is-disabled').attr('data-page', (page + 1));
       $('.page').removeClass('is-disabled').removeClass('current-page');
